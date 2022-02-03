@@ -11,25 +11,25 @@
  * @return {ListNode}
  */
 var addTwoNumbers = function(l1, l2) {
-  const addTwoNumbersHelper = (tup1, tup2, regroup) => {
-    if (!tup1 || !tup2) {
-      if (!tup1 && !tup2) {
-        return regroup ? new ListNode(1, null) : null
-      } else if (!tup1) {
-        if (regroup) {
-          const result = tup2.val + regroup
-          return new ListNode(result%10, addTwoNumbersHelper(null, tup2.next, ~~(result/10)))
-        } else {
-          return tup2
-        }
-      } else {
-        return addTwoNumbersHelper(tup2, tup1, regroup)
-      }
-    } else {
-      const result = tup1.val + tup2.val + regroup
-      return new ListNode(result%10, addTwoNumbersHelper(tup1.next, tup2.next, ~~(result/10)))
+  const result = new ListNode()
+  let p1 = l1
+  let p2 = l2
+  let carry = 0
+  let last = result
+  while (p1 || p2 || carry) {
+    let sum = 0
+    if (p1) {
+      sum += p1.val
+      p1 = p1.next
     }
+    if (p2) {
+      sum += p2.val
+      p2 = p2.next
+    }
+    sum += carry
+    last.next = new ListNode(sum % 10)
+    last = last.next
+    carry = ~~(sum / 10)
   }
-  
-  return addTwoNumbersHelper(l1, l2, 0)
+  return result.next
 }
