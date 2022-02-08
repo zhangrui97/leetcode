@@ -17,10 +17,11 @@ public:
     string str = prepareString(s);
     auto len = str.length();
     int index = 0;
+    int result = 1;
     int center = 0;
     int right = 0;
     vector<int> dp(len, 1);
-    for (int i = 1; i < len - 1 - dp[index]; i++) {
+    for (int i = 1; i < len - 1 - result; i++) {
       if (i < right - 1) {
         dp[i] = min(right - i, dp[2*center - i]);
       }
@@ -31,10 +32,11 @@ public:
         center = i;
         right = i + dp[i];
       }
-      if (dp[i] > dp[index]) {
+      if (dp[i] > result) {
         index = i;
+        result = dp[index];
       }
     }
-    return s.substr((index-dp[index])/2, dp[index] - 1);
+    return s.substr((index-result)/2, result - 1);
   }
 };
