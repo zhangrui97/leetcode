@@ -20,7 +20,7 @@ public:
     int center = 0;
     int right = 0;
     vector<int> dp(len, 1);
-    for (int i = 1; i < len - 2; i++) {
+    for (int i = 1; i < len - 1 - dp[index]; i++) {
       if (i < right - 1) {
         dp[i] = min(right - i, dp[2*center - i]);
       }
