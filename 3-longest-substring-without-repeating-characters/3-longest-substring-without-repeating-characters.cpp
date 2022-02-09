@@ -1,16 +1,16 @@
 class Solution {
 public:
   int lengthOfLongestSubstring(string s) {
-    map<char, int> dp;
-    int last = 0;
+    vector<int> dp(256, -1);
+    int last = -1;
     int result = 0;
     for (string::size_type i = 0; i < s.size(); i++) {
       char ch = s[i];
-      if (dp.count(ch) && dp[ch] >= last) {
-        last = dp[ch] + 1;
+      if (dp[ch] > last) {
+        last = dp[ch];
       } else {
-        if (i + 1 - last > result) {
-          result = i + 1 - last;
+        if (i - last > result) {
+          result = i - last;
         }
       }
       dp[ch] = i;
