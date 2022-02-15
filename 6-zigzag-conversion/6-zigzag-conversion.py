@@ -1,8 +1,8 @@
 class Solution:
   def convert(self, s: str, numRows: int) -> str:
-    if numRows == 1: return s
-    result = ''
     n = len(s)
+    if numRows == 1 or numRows >= n: return s
+    result = ''
     step = 2*numRows - 2
     for i in range(numRows):
       index1 = i
