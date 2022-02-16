@@ -3,13 +3,23 @@
  * @return {number}
  */
 var romanToInt = function(s) {
-  const map = {I: 1, V: 5, X: 10, L: 50, C:100, D:500, M:1000}
+  let a = s.split('').map(ch => {
+    switch (ch) {
+      case 'I': return 1
+      case 'V': return 5
+      case 'X': return 10
+      case 'L': return 50
+      case 'C': return 100
+      case 'D': return 500
+      case 'M': return 1000
+    }
+  })
   let sum = 0
-  for (let i = 0; i < s.length; i++) {
-    if (map[s[i]] < map[s[i+1]]) {
-      sum -= map[s[i]]
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] < a[i+1]) {
+      sum -= a[i]
     } else {
-      sum += map[s[i]]
+      sum += a[i]
     }
   }
   return sum
