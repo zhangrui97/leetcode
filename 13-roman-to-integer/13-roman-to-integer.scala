@@ -12,16 +12,18 @@ object Solution {
 		}
     
   def romanToInt(s: String): Int = {
-    val a = s.map(charToInt)
     var result = 0
-    for (i <- 0 until a.length - 1) {
-      if (a(i) < a(i+1)) {
-        result -= a(i)          
+    var last = charToInt(s.charAt(0))
+    for (i <- 1 until s.length) {
+      val current = charToInt(s.charAt(i))
+      if (last < current) {
+        result -= last          
       } else {
-        result += a(i)
+        result += last
       }
+      last = current
     }
-    result += a(a.length-1)
+    result += last
     return result
   }
 }
