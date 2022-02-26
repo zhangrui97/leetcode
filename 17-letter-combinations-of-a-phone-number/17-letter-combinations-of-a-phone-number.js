@@ -3,18 +3,20 @@
  * @return {string[]}
  */
 var letterCombinations = function(digits) {
-  const map = ["","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"]
-  let result = []
-  for (let d of digits) {
-    if (result.length === 0) {
-      for (let ch of map[+d]) result.push(ch)
-    } else {
-      const temp = []
-      for (let s of result) {
-        for (let ch of map[+d]) temp.push(s+ch)
-      }
-      result = temp
-    }
+  const map = [[],[],
+               ['a','b','c'],
+               ['d','e','f'],
+               ['g','h','i'],
+               ['j','k','l'],
+               ['m','n','o'],
+               ['p','q','r','s'],
+               ['t','u','v'],
+               ['w','x','y','z']]
+  const combine = aoa => {
+    if (aoa.length === 0) return []
+    if (aoa.length === 1) return aoa[0]
+    const [h, ...t] = aoa
+    return [].concat(...(combine(t).map(s => [...(h.map(c => c+s))])))
   }
-  return result
+  return combine(digits.split('').map(ch => map[+ch]))
 };
