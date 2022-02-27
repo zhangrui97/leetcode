@@ -1,5 +1,4 @@
-const map = new Map([[')','('], [']','['], ['}','{']])
-const set = new Set(map.values())
+const map = new Map([['(',')'], ['[',']'], ['{','}']])
 /**
  * @param {string} s
  * @return {boolean}
@@ -7,14 +6,14 @@ const set = new Set(map.values())
 var isValid = function(s) {
   if (s.length === 1) return false
   let open = []
-  let isMatch = ch => open.length > 0 && map.has(ch) && open[0] === map.get(ch)
+  let isMatch = ch => open.length > 0 && open.at(-1) === ch
   for (let ch of s) {
-    if (set.has(ch)) {
-      open = ch + open
+    if (map.has(ch)) {
+      open.push(map.get(ch))
     } else {
       if (!isMatch(ch)) return false 
-      open = open.substring(1)
+      open.pop()
     }
   }
-  return open == []
+  return open.length === 0
 };
