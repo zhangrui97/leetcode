@@ -1,4 +1,4 @@
-const map = new Map([['(',')'], ['[',']'], ['{','}']])
+const map = {'(':')', '[':']', '{':'}'}
 /**
  * @param {string} s
  * @return {boolean}
@@ -6,13 +6,12 @@ const map = new Map([['(',')'], ['[',']'], ['{','}']])
 var isValid = function(s) {
   if (s.length === 1) return false
   let open = []
-  let isMatch = ch => open.length > 0 && open.at(-1) === ch
   for (let ch of s) {
-    if (map.has(ch)) {
-      open.push(map.get(ch))
+    if (ch in map) {
+      open.push(map[ch])
     } else {
-      if (!isMatch(ch)) return false 
-      open.pop()
+      if (open.pop() != ch)
+        return false
     }
   }
   return open.length === 0
