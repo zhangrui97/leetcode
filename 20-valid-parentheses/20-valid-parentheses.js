@@ -1,3 +1,5 @@
+const map = new Map([[')','('], [']','['], ['}','{']])
+const set = new Set(map.values())
 /**
  * @param {string} s
  * @return {boolean}
@@ -5,16 +7,9 @@
 var isValid = function(s) {
   if (s.length === 1) return false
   let open = []
-  let isMatch = ch => {
-    if (open.length <= 0) return false
-    switch (ch) {
-      case ')': return open[0] === '('
-      case ']': return open[0] === '['
-      case '}': return open[0] === '{'
-    }
-  }
+  let isMatch = ch => open.length > 0 && map.has(ch) && open[0] === map.get(ch)
   for (let ch of s) {
-    if (ch === '(' || ch === '[' || ch === '{') {
+    if (set.has(ch)) {
       open = ch + open
     } else {
       if (!isMatch(ch)) return false 
