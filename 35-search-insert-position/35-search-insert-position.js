@@ -5,7 +5,6 @@
  */
 var searchInsert = function(nums, target) {
   const search = (l, r) => {
-    console.log(l, r)
     if (nums[l] >= target) return l
     if (nums[r] === target) return r
     if (nums[r] < target) return r + 1
