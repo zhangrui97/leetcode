@@ -36,13 +36,12 @@ var solveSudoku = function(board) {
         }
       }
     }
+    unsolved.sort((i0, i1) => getValues(i1).length - getValues(i0).length)
   }
   const solve = () => {
     if (unsolved.length === 0) {
       return true
     }
-    if (unsolved.some(i => getValues(i) === 0)) return false
-    unsolved.sort((i0, i1) => getValues(i1).length - getValues(i0).length)
     const t = unsolved.pop()
     const values = getValues(t)
     for (let v of values) {
