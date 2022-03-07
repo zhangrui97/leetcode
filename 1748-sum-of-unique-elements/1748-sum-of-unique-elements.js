@@ -3,8 +3,7 @@
  * @return {number}
  */
 var sumOfUnique = function(nums) {
-  const set = new Set(nums)
-  nums.forEach((n, i) => nums.indexOf(n) != i ? set.delete(n) : 0)
-  if (set.size === 0) return 0
-  return [...set].reduce((a, b) => a + b)
+  let ans = 0
+  nums.forEach(n => ans += nums.indexOf(n) == nums.lastIndexOf(n) ? n : 0)
+  return ans
 };
