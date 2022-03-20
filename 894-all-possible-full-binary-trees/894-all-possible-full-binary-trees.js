@@ -12,12 +12,15 @@
  */
 var allPossibleFBT = function(n) {
   if (n % 2 === 0) return []
-  if (n === 1) return [new TreeNode(0)]
-  const ans = []
-  for (let l = 1; l < n; l += 2) {
-    allPossibleFBT(l).forEach(lNode =>
-      allPossibleFBT(n-l-1).forEach(rNode =>
-        ans.push(new TreeNode(0, lNode, rNode))))
+  const level = (n + 1) / 2 
+  const dp = new Array(level)
+  dp[0] = [new TreeNode(0)]
+  for (let i = 1; i < level; i ++) {
+    dp[i] = []
+    for (let l = 0; l < i; l ++) {
+      dp[l].forEach(lNode => dp[i - 1 - l].forEach(rNode =>
+        dp[i].push(new TreeNode(0, lNode, rNode))))
+    }
   }
-  return ans
+  return dp[level-1]
 };
