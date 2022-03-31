@@ -22,7 +22,7 @@ func targetIndices(nums []int, target int) []int {
   if left > r {
     return []int{}
   } else {
-    var ans []int
+    ans := make([]int, 0, r + 1 - left)
     for i := left; i <= r; i++ {
       ans = append(ans, i)
     }
