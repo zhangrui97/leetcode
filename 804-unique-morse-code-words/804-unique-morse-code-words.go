@@ -1,14 +1,3 @@
-import "fmt"
-
-func contains(s []uint64, e uint64) bool {
-    for _, a := range s {
-        if a == e {
-            return true
-        }
-    }
-    return false
-}
-
 func uniqueMorseRepresentations(words []string) int {
   morseMap := map[byte]uint64{
     'a': (2 << 56) | 0b01, //".-"
@@ -38,7 +27,7 @@ func uniqueMorseRepresentations(words []string) int {
     'y': (4 << 56) | 0b1011, // "-.--"
     'z': (4 << 56) | 0b1100,  // "--.."
   }
-  ans := make([]uint64, 0, len(words))
+  ans := make(map[uint64]bool)
   for _, word := range words {
     num := uint64(0)
     bits := uint64(0)
@@ -48,10 +37,7 @@ func uniqueMorseRepresentations(words []string) int {
       num += n
       bits = (bits << n) | (val & 0xFF) 
     }
-    result := (num << 56) | bits
-    if !contains(ans, result) {
-      ans = append(ans, result)
-    }
+    ans[(num << 56) | bits] = true
   }
   return len(ans)
 }
