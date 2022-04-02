@@ -1,20 +1,15 @@
 func diStringMatch(s string) []int {
-  min, max := 0, 0
-  ans := make([]int, len(s) + 1)
-  for i := 0; i < len(s); i ++ {
-    switch s[i] {
+  min, max := 0, len(s)
+  ans := make([]int, len(s), len(s) + 1)
+  for i, v := range s {
+    switch v {
       case 'I':
-        max++
-        ans[i+1] = max
+        ans[i] = min
+        min++
       case 'D':
-        min--
-        ans[i+1] = min
+        ans[i] = max
+        max--
     }
   }
-  if min < 0 {
-    for i := 0; i <= len(s); i ++ {
-      ans[i] -= min
-    }
-  }
-  return ans
+  return append(ans, min)
 }
