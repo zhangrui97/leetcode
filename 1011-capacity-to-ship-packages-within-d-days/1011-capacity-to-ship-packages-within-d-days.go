@@ -1,29 +1,20 @@
-func needMoreDays(weights []int, days, cap int) bool {
+func needDays(weights []int, cap int) int {
+  res := 0
   lastWeight := 0
-  l, r := 0, len(weights)
-  for days > 0 {
-    for l < r {
-      m := (l + r)/2
-      if weights[m] - lastWeight < cap {
-        l = m + 1
-      } else {
-        r = m
-      }
+  for i, v := range weights {
+    if v > lastWeight + cap {
+      res++
+      lastWeight = weights[i-1]
+    } else if v == lastWeight + cap {
+      res++
+      lastWeight = weights[i]
     }
-    if l >= len(weights) {
-      return false
-    }
-    if weights[l] - lastWeight == cap {
-      l++
-      if l == len(weights) {
-        return false
-      }
-    }
-    days--
-    lastWeight = weights[l-1]
-    r = len(weights)
   }
-  return true
+  if lastWeight == weights[len(weights)-1] {
+    return res
+  } else {
+    return res + 1
+  }
 }
 
 func shipWithinDays(weights []int, days int) int {
@@ -41,7 +32,7 @@ func shipWithinDays(weights []int, days int) int {
   l, r := max, sum + 1
   for l < r {
     m := (l + r) / 2
-    if needMoreDays(weights, days, m) {
+    if needDays(weights, m) > days {
       l = m + 1
     } else {
       r = m
