@@ -28,15 +28,17 @@ func needMoreDays(weights []int, days, cap int) bool {
 
 func shipWithinDays(weights []int, days int) int {
   leng := len(weights)
+  max := weights[0]
   for i := 1; i < leng; i++ {
-    weights[i] += weights[i-1]
+    v := weights[i]
+    if v > max {
+      max = v
+    }
+    weights[i] = weights[i-1] + v
   }  
-  max := weights[leng-1]
-  if days == 1 { return max }
-  l, r := max / days, max + 1
-  if l < weights[0] {
-    l = weights[0]
-  }
+  sum := weights[leng-1]
+  if days == 1 { return sum }
+  l, r := max, sum + 1
   for l < r {
     m := (l + r) / 2
     if needMoreDays(weights, days, m) {
