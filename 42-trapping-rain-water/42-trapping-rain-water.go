@@ -1,24 +1,27 @@
 func trap(height []int) int {
   length := len(height)
   if length < 2 { return 0 }
-  maxStack := make([]int, 0, length)
   sum := 0
-  for i, v := range height {
-    if i == 0 || v < height[maxStack[len(maxStack) - 1]] {
-      maxStack = append(maxStack, i)
-    } else {
-      for j, max := range maxStack {
-        if v >= height[max] {
-          maxStack[j] = i
-          maxStack = maxStack[0:j+1]
-          break
-        }
-      }
+  l, r := 0, length - 1
+  lmax := height[l]
+  rmax := height[r]
+  for l <= r {
+    lv, rv := height[l], height[r]
+    if lv >= lmax {
+      lmax = lv
+      l++
+    } else if lmax <= rmax {
+      sum += lmax - height[l]
+      l ++
     }
-    sum += height[maxStack[0]] - v
-  }
-  for i := len(maxStack) - 1; i > 0; i-- {
-    sum -= (maxStack[i] - maxStack[i-1])*(height[maxStack[0]] - height[maxStack[i]])
+    if l > r { break }
+    if rv >= rmax {
+      rmax = rv
+      r--
+    } else if rmax <= lmax {
+      sum += rmax - height[r]
+      r --
+    }
   }
   return sum
 }
