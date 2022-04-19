@@ -7,10 +7,8 @@
  */
 func middleNode(head *ListNode) *ListNode {
   prob, ans := head, head
-  for prob != nil {
-    prob = prob.Next
-    if prob == nil { break }
-    prob = prob.Next
+  for prob != nil && prob.Next != nil {
+    prob = prob.Next.Next
     ans = ans.Next
   }
   return ans
