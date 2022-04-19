@@ -1,36 +1,23 @@
+function buildPrefixSums(m) {
+  const fstRow = new Array(m[0].length+1)
+  fstRow.fill(0)
+  const result = [fstRow]
+  m.forEach((row, i) => {
+    const newRow = [0]
+    row.forEach((v, j) => {
+      newRow.push(v + result[i][j+1] + newRow[j] - result[i][j])
+    })
+    result.push(newRow)
+  })
+  return result
+}
 /**
  * @param {number[][]} matrix
  */
 var NumMatrix = function(matrix) {
-  this.matrix = matrix
-  for (j = 1; j < matrix[0].length; j++) {    
-    this.matrix[0][j] = this.matrix[0][j] + this.matrix[0][j-1] 
-  }
-
-  for (i = 1; i < matrix.length; i++) {
-    this.matrix[i][0] = this.matrix[i][0] + this.matrix[i-1][0]
-    
-    
-    for (j = 1; j < matrix[0].length; j++) {
-    
-    this.matrix[i][j] = this.matrix[i - 1][j] 
-      + this.matrix[i][j-1] 
-      - this.matrix[i-1][j-1] 
-      + this.matrix[i][j]
-      
-    }
-  }
+  this.matrix = buildPrefixSums(matrix)
+}
   
-    
-    
-    
-  /*[[1,1,1,1,1],
-     [2,2,2,2,2],
-     [3,123,123,12,3],
-     [4,123,12312,12,1]] */
-
-};
-
 /** 
  * @param {number} row1 
  * @param {number} col1 
@@ -39,20 +26,7 @@ var NumMatrix = function(matrix) {
  * @return {number}
  */
 NumMatrix.prototype.sumRegion = function(row1, col1, row2, col2) {
-  if (row1 === 0 && col1 === 0) { 
-    
-    return(this.matrix[row2][col2])
-    
-  }
-  if (row1 === 0) {
-    return(this.matrix[row2][col2] - this.matrix[row2][col1-1])
-    
-  }
-  if (col1 === 0) {
-    
-     return(this.matrix[row2][col2] - this.matrix[row1-1][col2])
-  }
-  return (this.matrix[row2][col2] - this.matrix[row1-1][col2] - this.matrix[row2][col1-1] + this.matrix[row1-1][col1-1])
+  return this.matrix[row2+1][col2+1] - this.matrix[row1][col2+1] - this.matrix[row2+1][col1] + this.matrix[row1][col1]
 };
 
 /** 
