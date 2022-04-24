@@ -12,10 +12,8 @@ var subarraySum = function(nums, k) {
   let sum = 0
   for (let i = 0; i < nums.length; i++) {
     sum += nums[i]
-    if (map.has(sum-k)) {
-      counter += map.get(sum-k)
-    }
-    map.set(sum, map.has(sum) ? map.get(sum)+1 : 1)
+    counter += (map.get(sum-k) || 0)
+    map.set(sum, (map.get(sum) || 0)+1)
   }
   return counter
 }
