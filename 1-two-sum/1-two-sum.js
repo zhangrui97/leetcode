@@ -4,11 +4,13 @@
  * @return {number[]}
  */
 var twoSum = function(nums, target) {
-  const map = new Map()
-  for (let i = 0; i < nums.length; i++) {
-    if (map.has(nums[i])) {
-      return [map.get(nums[i]), i]
+  const cache = {};
+  for(var i=0; i < nums.length; i++){
+    var value = nums[i];
+    var compliment = target - value;
+    if(cache[compliment] !==undefined){
+      return [i,cache[compliment]];
     }
-    map.set(target - nums[i], i)
+    else cache[value] = i;
   }
 };
