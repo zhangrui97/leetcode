@@ -1,15 +1,21 @@
 func nextGreaterElement(nums1 []int, nums2 []int) []int {
   ans := make([]int, len(nums1))
-  l := len(nums2)
-  for j, v := range nums1 {
-    i := 0
-    for ; nums2[i] != v; i++ {}
-    for ; i < l && nums2[i] <= v; i++ {}
-    if i >= l {
-      ans[j] = -1
-    } else {
-      ans[j] = nums2[i]
-    }   
+  for i := range ans {
+    ans[i] = -1
+  }
+  dict := make(map[int]int)
+  for i, v := range nums1 {
+    dict[v] = i
+  }
+  stack := make([]int, 0, len(nums2))
+  for _, v := range nums2 {
+    for len(stack) > 0 && v > stack[len(stack)-1] {
+      if ind, ok := dict[stack[len(stack)-1]]; ok {
+        ans[ind] = v
+      }
+      stack = stack[:len(stack)-1]
+    }
+    stack = append(stack, v)
   }
   return ans
 }
