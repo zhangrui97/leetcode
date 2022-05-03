@@ -4,11 +4,18 @@
  * @return {number[]}
  */
 var nextGreaterElement = function(nums1, nums2) {
-  const len = nums2.length
-  return nums1.map(n => {
-    for (let i = nums2.indexOf(n) + 1; i < len; i++) {
-      if (nums2[i] > n) return nums2[i]
+  const map = {}
+  nums1.forEach((v, i) => map[v] = i)
+  const ans = Array(nums1.length).fill(-1)
+  const stack = []
+  for (const v of nums2) {
+    while (stack.length > 0 && v > stack.at(-1)) {
+      if (map[stack.at(-1)] != undefined) {
+        ans[map[stack.at(-1)]] = v
+      }
+      stack.pop()
     }
-    return -1
-  })  
+    stack.push(v)
+  }
+  return ans
 };
