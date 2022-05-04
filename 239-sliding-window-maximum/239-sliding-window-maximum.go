@@ -6,11 +6,12 @@ func maxSlidingWindow(nums []int, k int) []int {
       q = q[:l-1]
     }
     q = append(q, v)
-    if i >= k && nums[i-k] == q[0] {
-      q = q[1:]
-    }
-    if i >= k - 1 {
-      ans[i+1-k] = q[0]
+    if i+1 >= k {
+      max := q[0]
+      ans[i+1-k] = max
+      if nums[i+1-k] == max {
+        q = q[1:]
+      }
     }
   }
   return ans
