@@ -19,5 +19,7 @@ func trimBST(root *TreeNode, low int, high int) *TreeNode {
     return trimBST(root.Left, low, high)
   }
   
-  return &TreeNode{root.Val, trimBST(root.Left, low, high), trimBST(root.Right, low, high)}
+  root.Left = trimBST(root.Left, low, high)
+  root.Right = trimBST(root.Right, low, high)
+  return root
 }
