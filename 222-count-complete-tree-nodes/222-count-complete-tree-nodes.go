@@ -10,35 +10,19 @@ func countNodes(root *TreeNode) int {
   if root == nil { 
     return 0
   }  
-  counter := 0
-  depth := 0
-  var find func(t *TreeNode, d int)bool
-  find = func(t *TreeNode, d int)bool {
-    if t.Right == nil {
-      if t.Left != nil {
-        depth = d + 1
-        counter ++
-        return true
-      }
-      if depth == 0 {
-        depth = d
-        counter += 2
-        return false
-      } else if d > depth {
-        depth = d
-        return true
-      }
-      counter += 2
-      return false
-    }
-    if find(t.Right, d+1) {
-      return true
-    }
-    return find(t.Left, d+1)
+  ld, rd := 1, 1
+  p := root.Left
+  for p != nil {
+    ld++
+    p = p.Left
   }
-  if find(root, 1) {
-    return (1 << depth) - 1 - counter
-  } else {
-    return (1 << depth) - 1
+  p = root.Right
+  for p != nil {
+    rd++
+    p = p.Right
   }
+  if ld == rd {
+    return 1 << ld - 1
+  }
+  return 1 + countNodes(root.Left) + countNodes(root.Right)
 }
