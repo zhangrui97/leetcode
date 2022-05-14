@@ -6,31 +6,18 @@
  *     Right *TreeNode
  * }
  */
-func contains(t *TreeNode, n *TreeNode)bool {
-  if t == nil {
-    return false
-  }
-  if t == n || (t.Left == n || t.Right == n) {
-    return true
-  }
-  if t.Left == nil && t.Right == nil {
-    return false
-  }
-  return contains(t.Left, n) || contains(t.Right, n)
-}
-
 func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
-  if root == p || root == q {
+  if root == nil || root == p || root == q {
     return root    
   }
-  pp := contains(root.Left, p)
-  pq := contains(root.Right, q)
-  if (pp && pq) || (!pp && !pq) {
+  pl := lowestCommonAncestor(root.Left, p, q)
+  pr := lowestCommonAncestor(root.Right, p, q)
+  if pl != nil && pr != nil {
     return root
   }
-  if pp {
-    return lowestCommonAncestor(root.Left, p, q)
+  if pl == nil {
+    return pr
   } else {
-    return lowestCommonAncestor(root.Right, p, q)
+    return pl
   }
 }
