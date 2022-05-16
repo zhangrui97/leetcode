@@ -8,11 +8,8 @@
  */
 func isUnivalTree(root *TreeNode) bool {
   if root == nil || (root.Left == nil && root.Right == nil) { return true }
-  if root.Left != nil && root.Right != nil {
-    return root.Val == root.Left.Val && root.Val == root.Right.Val && isUnivalTree(root.Left) && isUnivalTree(root.Right) 
-  }
-  if root.Left != nil {
-    return root.Val == root.Left.Val && isUnivalTree(root.Left)
-  }
-  return root.Val == root.Right.Val && isUnivalTree(root.Right)
+  v := root.Val
+  if root.Left != nil && root.Left.Val != v { return false }
+  if root.Right != nil && root.Right.Val != v { return false }
+  return isUnivalTree(root.Left) && isUnivalTree(root.Right) 
 }
