@@ -1,19 +1,20 @@
 func allPathsSourceTarget(graph [][]int) [][]int {
   l := len(graph)
   ans := make([][]int, 0)
-  var traverse func(path []int)
-  traverse = func(path []int) {
-    a := path[len(path)-1]
+  var traverse func(a int, path []int)
+  traverse = func(a int, path []int) {
     if a == l-1 {
-      newPath := make([]int, len(path))
+      pl := len(path)
+      newPath := make([]int, pl + 1)
       copy(newPath, path)
+      newPath[pl] = a
       ans = append(ans, newPath)
     } else {
       for _, v := range graph[a] {
-        traverse(append(path, v))
+        traverse(v, append(path, a))
       }
     }
   }
-  traverse([]int{0})
+  traverse(0, []int{})
   return ans
 }
