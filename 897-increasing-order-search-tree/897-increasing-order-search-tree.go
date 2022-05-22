@@ -6,19 +6,14 @@
  *     Right *TreeNode
  * }
  */
+func dfs(t *TreeNode, tail *TreeNode)*TreeNode {
+  if t == nil { return tail }
+  l := dfs(t.Left, t)
+  t.Left = nil
+  t.Right = dfs(t.Right, tail)
+  return l
+}
+
 func increasingBST(root *TreeNode) *TreeNode {
-  if root == nil { return nil }
-  l := increasingBST(root.Left)
-  root.Left = nil
-  root.Right = increasingBST(root.Right)
-  if l == nil { 
-    return root
-  } else {
-    r := l
-    for r.Right != nil {
-      r = r.Right
-    }
-    r.Right = root
-    return l
-  }
+  return dfs(root, nil)
 }
