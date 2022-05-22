@@ -6,24 +6,19 @@
  *     Right *TreeNode
  * }
  */
-func dfs(t *TreeNode, path []int, res *[][]int) {
+func dfs(t *TreeNode, path string, res *[]string) {
   if t == nil { return }
-  path = append(path, t.Val)
+  path += strconv.Itoa(t.Val)
   if t.Left == nil && t.Right == nil {
-    p := make([]int, len(path))
-    copy(p, path)
-    *res = append(*res, p)
+    *res = append(*res, path)
     return
   }
+  path += "->"
   dfs(t.Left, path, res)
   dfs(t.Right, path, res)
 }
 func binaryTreePaths(root *TreeNode) []string {
-  res := [][]int{}
-  dfs(root, []int{}, &res)
-  ans := make([]string, len(res))
-  for i, v := range res {
-    ans[i] = strings.Trim(strings.Join(strings.Fields(fmt.Sprint(v)), "->"), "[]")
-  }
-  return ans
+  res := []string{}
+  dfs(root, "", &res)
+  return res
 }
