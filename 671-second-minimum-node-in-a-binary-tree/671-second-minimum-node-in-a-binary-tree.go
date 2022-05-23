@@ -11,6 +11,7 @@ func dfs(t *TreeNode, min int, ans *int) {
   if t.Val == min {
     dfs(t.Left, min, ans)
     dfs(t.Right, min, ans)
+    return
   }
   if t.Val > min && (*ans == -1 || t.Val < *ans) { 
     *ans = t.Val 
