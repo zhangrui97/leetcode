@@ -6,26 +6,21 @@
  *     Right *TreeNode
  * }
  */
-func min(a, b int) int {
-  if a > b {
-    return b
-  } else {
-    return a
-  }
-}
 func minDepth(root *TreeNode) int {
-  if root == nil {
-    return 0
-  }
-  if root.Left == nil && root.Right == nil {
-    return 1
-  }
-  if root.Left == nil || root.Right == nil {
-    if root.Left == nil {
-      return minDepth(root.Right) + 1
-    } else {
-      return minDepth(root.Left) + 1
+  if root == nil { return 0 }
+  res := 0
+  level := []*TreeNode{root}
+  for l := len(level); l > 0; l = len(level) {
+    for i := 0; i < l; i ++ {
+      t := level[0]
+      level = level[1:]
+      if t.Left == nil && t.Right == nil {
+        return res + 1
+      }
+      if t.Left != nil { level = append(level, t.Left) }
+      if t.Right != nil { level = append(level, t.Right) }
     }
-  }
-  return min(minDepth(root.Left), minDepth(root.Right)) + 1
+    res++
+  }  
+  return res
 }
