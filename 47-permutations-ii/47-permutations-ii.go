@@ -14,11 +14,11 @@ func permuteUnique(nums []int) [][]int {
       return
     }
     pre := -100
-    for i := 0; i < n; i++ {
-      if used[i] || nums[i] == pre { continue }
-      track = append(track, nums[i])
+    for i, v := range nums {
+      if used[i] || v == pre { continue }
+      track = append(track, v)
       used[i] = true
-      pre = nums[i]
+      pre = v
       backtrack()
       track = track[:len(track)-1]
       used[i] = false
