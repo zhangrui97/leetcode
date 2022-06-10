@@ -10,7 +10,8 @@ func permute(nums []int) [][]int {
       result = append(result, res)
       return
     }
-    for j := 0; j <= i; j++ {
+    backtrack(i-1, path)
+    for j := 0; j < i; j++ {
       path[j], path[i] = path[i], path[j]
       backtrack(i-1, path)
       path[j], path[i] = path[i], path[j]
