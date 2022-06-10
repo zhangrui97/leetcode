@@ -5,16 +5,17 @@ func combinationSum2(candidates []int, target int) [][]int {
   var backtrack func(path []int , i, t int)
   backtrack = func(path []int, i, t int) {
     l := len(path)
-    if t == 0 {
-      res := make([]int, l)
-      copy(res, path)
-      ans = append(ans, res)
-      return
-    }
     pre := -1
     for j := i; j < n; j++ {
       v := candidates[j]
       if t < v { return }
+      if t == v {
+        res := make([]int, l+1)
+        copy(res, path)
+        res[l] = v
+        ans = append(ans, res)
+        return
+      }
       if v == pre { continue }
       path = append(path, v)
       pre = v
