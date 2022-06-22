@@ -1,15 +1,14 @@
 func maxSubArray(nums []int) int {
-  dp := make([]int, len(nums))
-  dp[0] = nums[0]
-  ans := dp[0]
-  for i := 1; i < len(nums); i++ {
-    if dp[i-1] < 0 {
-      dp[i] = nums[i]
+  ans := -10001
+  sum := 0
+  for _, v := range nums {
+    if sum > 0 {
+      sum += v
     } else {
-      dp[i] = nums[i] + dp[i-1]
+      sum = v
     }
-    if dp[i] > ans {
-      ans = dp[i]
+    if sum > ans {
+      ans = sum
     }
   }
   return ans
