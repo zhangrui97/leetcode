@@ -8,16 +8,19 @@ func max(a, b int)int {
 
 func longestCommonSubsequence(text1 string, text2 string) int {
   n1, n2 := len(text1), len(text2)
-  dpPre, dpCur := make([]int, n2+1), make([]int, n2+1) 
-  for i := 1; i <= n1; i++ {
-    dpPre, dpCur = dpCur, dpPre
-    for j := 1; j <= n2; j++ {
-      if text1[i-1] == text2[j-1] {
-        dpCur[j] = dpPre[j-1] + 1
-      } else {
-        dpCur[j] = max(dpPre[j], dpCur[j-1])
-      }
-    }
+  memo := make(map[[2]int]int)
+  var dp func(i, j int)int
+  dp = func(i, j int)int {
+    index := [2]int{i, j}
+    if v, ok := memo[index]; ok { return v }
+    if i < 0 || j < 0 { return 0 }
+    if text1[i] == text2[j] { 
+      v := dp(i-1, j-1) + 1
+      memo[index] = v
+      return v }
+    v := max(dp(i-1, j), dp(i, j-1))
+    memo[index] = v
+    return v
   }
-  return dpCur[n2]
+  return dp(n1-1, n2-1)
 }
