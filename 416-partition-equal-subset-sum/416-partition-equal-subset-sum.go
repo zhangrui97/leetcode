@@ -8,10 +8,8 @@ func canPartition(nums []int) bool {
 		return false
 	}
 	sum = sum / 2
-  fmt.Println(sum)
 	for range nums {
     ans := 0
-    fmt.Println(nums)
 		for _, num := range nums {
 			if num+ans <= sum {
 				ans += num
