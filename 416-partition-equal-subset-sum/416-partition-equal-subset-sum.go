@@ -1,26 +1,36 @@
-func canPartition(nums []int) bool {
-  sum, max := 0, 0
-	for _, num := range nums {
-		sum += num
-    if num > max { max = num }
-	}
-	if sum%2 != 0 || max+max > sum {
-		return false
-	}
-	sum = sum / 2
-	for range nums {
-    ans := 0
-		for _, num := range nums {
-			if num+ans <= sum {
-				ans += num
-			}
-			if ans == sum {
-				return true
-			}
-		}
-		nums = append(nums, nums[0])
-		nums = nums[1:]
-	}
+func max(a, b int)int {
+  if a > b {
+    return a
+  } else {
+    return b
+  }
+}
 
-	return false
+func canPartition(nums []int) bool {
+  n := len(nums)
+  sum := 0
+  mx := 0
+  for _, v := range nums {
+    sum += v
+    if v > mx { mx = v }
+  }  
+  if sum % 2 == 1 || mx + mx > sum { return false }
+  sum /= 2
+  if mx == sum { return true }
+  dpPre, dpCur := make([]int, sum+1), make([]int, sum+1)
+  for i := 1; i <= n; i++ {
+    dpCur, dpPre = dpPre, dpCur
+    v := nums[i-1]
+    for j := 1; j <= sum; j++ {
+      if j < v {
+        dpCur[j] = dpPre[j]
+      } else if j == v {
+        dpCur[j] = v
+      } else {
+        dpCur[j] = max(dpPre[j], dpPre[j-v] + v)
+        if dpCur[j] == sum { return true }
+      }
+    }
+  }
+  return dpCur[sum] == sum
 }
