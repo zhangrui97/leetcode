@@ -1,20 +1,20 @@
-use std::cmp::Ordering;
-
-fn search(nums: &Vec<i32>, target: i32, lo: usize, hi: usize) -> i32 {
-  if lo > hi { 
-    -1
-  } else {
-    let mid = (lo+hi) / 2;
-    match nums[mid].cmp(&target) {
-      Ordering::Less => search(nums, target, mid+1, hi),
-      Ordering::Greater => if mid == 0 { -1 } else { search(nums, target, lo, mid-1) },
-      Ordering::Equal => mid as i32,
-    }
-  }
-}
-
 impl Solution {
   pub fn search(nums: Vec<i32>, target: i32) -> i32 {
-    search(&nums, target, 0, nums.len()-1)
+    let mut lo: usize = 0;
+    let mut hi: usize = nums.len() - 1;
+    while lo <= hi {
+      let mid = (lo + hi) / 2;
+      if nums[mid] == target { return mid as i32 }
+      if nums[mid] > target {
+        if mid == 0 { 
+          return -1 
+        } else {
+          hi = mid - 1;
+        }
+      } else {
+        lo = mid + 1;
+      }
+    }
+    -1
   }
 }
