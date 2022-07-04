@@ -8,7 +8,7 @@ impl Solution {
       }
     }
     for i in 1usize..(n as usize) {
-      ans[i] += ans[i-1]
+      ans[i] += ans[i-1];
     }
     ans
   }
