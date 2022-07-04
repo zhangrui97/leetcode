@@ -7,11 +7,8 @@ impl Solution {
         ans[r[1] as usize] -= r[2];
       }
     }
-    println!("{:?}", ans);
-    let mut s = 0;
-    for n in &mut ans {
-      s += *n;
-      *n = s;
+    for i in 1usize..(n as usize) {
+      ans[i] += ans[i-1]
     }
     ans
   }
