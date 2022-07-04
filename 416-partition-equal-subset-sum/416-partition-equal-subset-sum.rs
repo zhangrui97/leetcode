@@ -5,9 +5,9 @@ impl Solution {
     let target = (sum / 2) as usize;
     let mut dp = vec![false; target + 1];
     dp[0usize] = true;
-    for n in nums.iter() {
-      for i in (*n as usize..=target).rev() {
-        dp[i] = dp[i] || dp[i-(*n as usize)]
+    for &n in nums.iter() {
+      for i in (n as usize..=target).rev() {
+        dp[i] = dp[i] || dp[i-(n as usize)]
       }
     }
     dp[target]
